@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\HTTP\Controllers\LibraryController;
+use App\HTTP\Controllers\MemberController;
+use App\HTTP\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +17,27 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('main');
 });
+
+Route::get('/library', [LibraryController::class, 'Books'])->middleware(['auth'])->name('library');
+
+Route::get('/library/bookview/{id}', [LibraryController::class, 'bookView'])->middleware(['auth'])->name('bookview');
+
+Route::get('/members', [MemberController::class, 'members'])->middleware(['auth'])->name('members');
+
+Route::get('/addBook', function () {
+    return view('addBook');
+})->middleware(['auth'])->name('addBook');
+Route::post('/addBook', [LibraryController::class, 'addBook'])->middleware(['auth']);
+
+Route::get('/library/editview/{id}', [LibraryController::class, 'editView'])->middleware(['auth'])->name('editView');
+Route::post('/library/editview/{id}', [LibraryController::class, 'editBook'])->middleware(['auth'])->name('editBook');
+
+Route::get('/dashboard', [DashboardController::class, 'Books'])->middleware(['auth'])->name('dashboard');
+
+Route::get('/members/addmember', function() {
+    return view('addMember');
+})->middleware(['auth'])->name('addmember');
+
+require __DIR__.'/auth.php';
