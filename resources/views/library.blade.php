@@ -15,7 +15,7 @@
                     </a>
                 </div>
             </div>
-            @include('pagination')
+            @include('books.pagination')
         </div>
     </div>
 </x-app-layout>

@@ -27,7 +27,7 @@ Route::get('/library/bookview/{id}', [LibraryController::class, 'bookView'])->mi
 Route::get('/members', [MemberController::class, 'members'])->middleware(['auth'])->name('members');
 
 Route::get('/addBook', function () {
-    return view('addBook');
+    return view('books.addBook');
 })->middleware(['auth'])->name('addBook');
 Route::post('/addBook', [LibraryController::class, 'addBook'])->middleware(['auth']);
 
@@ -37,7 +37,8 @@ Route::post('/library/editview/{id}', [LibraryController::class, 'editBook'])->m
 Route::get('/dashboard', [DashboardController::class, 'Books'])->middleware(['auth'])->name('dashboard');
 
 Route::get('/members/addmember', function() {
-    return view('addMember');
+    return view('members.addMember');
 })->middleware(['auth'])->name('addmember');
+Route::post('/members/addmember', [MemberController::class, 'store']);
 
 require __DIR__.'/auth.php';

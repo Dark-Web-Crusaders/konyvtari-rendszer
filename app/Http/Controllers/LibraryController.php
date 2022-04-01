@@ -19,7 +19,7 @@ class LibraryController extends Controller
     public function bookView($id)
     {
         $book = DB::table("books")->where("id", $id)->first();
-        return view('bookview' , compact('book'));
+        return view('books.bookview' , compact('book'));
     }
 
     public function addBook(Request $request)
@@ -56,7 +56,7 @@ class LibraryController extends Controller
     public function editView($id)
     {
         $book = DB::table("books")->where("id", $id)->first();
-        return view('editView' , compact('book'));
+        return view('books.editView' , compact('book'));
     }
 
     public function editBook(Request $request, $id)
@@ -85,6 +85,6 @@ class LibraryController extends Controller
                'quantity' => $request->quantity,
                'image' => $path
             ]);
-        return redirect()->route('bookview', ['id' => $id]);
+        return redirect()->route('books.bookview', ['id' => $id]);
     }
 }

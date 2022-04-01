@@ -15,7 +15,7 @@
                     </a>
                 </div>
             </div>
-            @include('memberPagination')
+            @include('members.pagination')
         </div>
     </div>
 </x-app-layout>
