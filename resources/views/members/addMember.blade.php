@@ -23,7 +23,7 @@
                     {{ Form::label('pinLabel', 'PIN:', ['class' => 'p-2 my-1 md:mx-1 mx-10 md:text-right text-center']) }}
                     {{ Form::text('pin', '', ['class' => 'border-0 hover:bg-gray-200 focus:bg-gray-200 my-1 md:mx-1 mx-10 md:text-left text-center', 'placeholder' => 'Pin']) }}
                     {{ Form::label('roleLabel', 'Role:', ['class' => 'p-2 my-1 md:mx-1 mx-10 md:text-right text-center']) }}
-                    {{ Form::select('', ['US' => 'University student', 'UL' => 'University lecturer',
+                    {{ Form::select('role', ['US' => 'University student', 'UL' => 'University lecturer',
                      'OU' => 'Other University\'s lecturer and student ', 'EE' => 'Everybody else'],
                       'EE' ,['class' => 'border-0 hover:bg-gray-200 focus:bg-gray-200 my-1 md:mx-1 mx-10']) }}
                 </div>

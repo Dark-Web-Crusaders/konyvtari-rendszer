@@ -1,4 +1,13 @@
 <div>
+    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg m-1">
+        @include('inc.messages')
+        <form id="searchForm" class="search" action="{{route('library')}}" method="POST">
+            @csrf
+            <input name="search" type="text" class="search-box"/>
+            <span class="search-button">
+                <span class="search-icon"></span>
+            </span>
+        </form>
     <div id="grid"
         class="bg-white overflow-hidden shadow-sm sm:rounded-lg m-2 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         @foreach( $books as $book )
@@ -36,3 +45,12 @@
     </div>
     {!! $books->links() !!}
 </div>
+
+<script>
+    $('.search-button').click(function() {
+        $(this).parent().toggleClass('open');
+        if (!$(this).parent().hasClass('open')) {
+            document.getElementById('searchForm').submit();
+        }
+    });
+</script>

@@ -21,10 +21,12 @@ Route::get('/', function () {
 });
 
 Route::get('/library', [LibraryController::class, 'Books'])->middleware(['auth'])->name('library');
+Route::post('/library', [LibraryController::class, 'search']);
 
 Route::get('/library/bookview/{id}', [LibraryController::class, 'bookView'])->middleware(['auth'])->name('bookview');
 
 Route::get('/members', [MemberController::class, 'members'])->middleware(['auth'])->name('members');
+Route::post('/members', [MemberController::class, 'search']);
 
 Route::get('/addBook', function () {
     return view('books.addBook');

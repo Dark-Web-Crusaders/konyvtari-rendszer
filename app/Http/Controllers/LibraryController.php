@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use File;
 
+use App\Models\Book;
+
 use AppHttpRequests;
 
 class LibraryController extends Controller
@@ -13,6 +15,19 @@ class LibraryController extends Controller
     public function Books()
     {
         $books = DB::table("books")->paginate(12);
+        return view("library", compact('books'));
+    }
+
+    public function search(Request $request)
+    {
+        $books = Book::where('title', 'like', '%' . $request->search . '%')
+            ->orWhere('author', 'like', '%' . $request->search . '%')
+            ->orWhere('publisher', 'like', '%' . $request->search . '%')
+            ->orWhere('published', 'like', '%' . $request->search . '%')
+            ->orWhere('quantity', 'like', '%' . $request->search . '%')
+            ->orWhere('isbn', 'like', '%' . $request->search . '%')
+            ->orWhere('isbn13', 'like', '%' . $request->search . '%')
+            ->paginate(20);
         return view("library", compact('books'));
     }
 

@@ -1,23 +1,33 @@
 <div class="my-2">
+
     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg m-1">
+        @include('inc.messages')
+        <form id="searchForm" class="search" action="{{route('members')}}" method="POST">
+            @csrf
+            <input name="search" type="text" class="search-box"/>
+            <span class="search-button">
+                <span class="search-icon"></span>
+            </span>
+        </form>
         <table id="table" class="w-full text-center">
             <tr>
-                <th>ID</th>
                 <th>Name</th>
                 <th>Birth date</th>
-                <th>PIN</th>
+                <th>Address</th>
+                <th>Email</th>
+                <th>Pin</th>
+                <th>Role</th>
             </tr>
         @foreach ($members as $member)
             <tr>
-                <td>{{$member->id}}</td>
                 <td>
                     <div contenteditable="false" id="nameDiv{{$loop->iteration}}" class="border-0 m-0 p-0 text-center">{{$member->name}}</div>
                 </td>
                 <td>{{$member->birth_date}}</td>
+                <td>{{$member->address}}</td>
+                <td>{{$member->email}}</td>
                 <td>{{$member->PIN}}</td>
-                <td>
-                    <input type="checkbox" name="checkbox" id="{{$loop->iteration}}">
-                </td>
+                <td>{{$member->role}}</td>
             </tr>
         @endforeach
         </table>
@@ -37,6 +47,10 @@
             }
         });
     });
-
-
+    $('.search-button').click(function() {
+        $(this).parent().toggleClass('open');
+        if (!$(this).parent().hasClass('open')) {
+            document.getElementById('searchForm').submit();
+        }
+    });
 </script>

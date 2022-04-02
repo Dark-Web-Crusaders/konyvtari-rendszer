@@ -22,8 +22,11 @@ class MemberFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'birth_date' => now(),
+            'birth_date' => $this->faker->date($format = 'Y-m-d', $max = 'now'),
+            'address' => $this->faker->address(),
+            'email' => $this->faker->safeEmail(),
             'PIN' => Str::random(8),
+            'role' => 'EE'
         ];
     }
 }
