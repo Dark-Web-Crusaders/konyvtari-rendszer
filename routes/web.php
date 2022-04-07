@@ -1,9 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\HTTP\Controllers\LibraryController;
-use App\HTTP\Controllers\MemberController;
-use App\HTTP\Controllers\DashboardController;
+use App\Http\Controllers\LibraryController;
+use App\Http\Controllers\MemberController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RentalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,5 +43,15 @@ Route::get('/members/addmember', function() {
     return view('members.addMember');
 })->middleware(['auth'])->name('addmember');
 Route::post('/members/addmember', [MemberController::class, 'store']);
+
+Route::get('/rentals', [RentalController::class, 'rentals'])->middleware(['auth'])->name('rentals');
+Route::post('/rentals', [RentalController::class, 'search']);
+
+Route::get('/rentals/addrental', function() {
+    return view('rentals.addRental');
+})->middleware(['auth'])->name('addrental');
+Route::post('/rentals/addrental', [RentalController::class, 'store']);
+Route::get('/rentals/rentalview/{id}', [RentalController::class, 'rentalView'])->middleware(['auth'])->name('rentalview');
+Route::delete('/rentals/{rental}', [RentalController::class, 'destroy']); 
 
 require __DIR__.'/auth.php';
