@@ -127,6 +127,7 @@ class RentalController extends Controller
         $my_memberID = Member::where('PIN', '=', $request->search)->first('id')->id;
         $rentals = Rental::where('memberID', '=', $my_memberID)
             ->where('returned', '=', 0)
+            ->select('*', \DB::raw("rentals.id as rentalID"))
             ->join('books', 'rentals.bookID', '=', 'books.id')
             ->join('members', 'rentals.memberID', '=', 'members.id')
             ->paginate(20);
@@ -138,6 +139,7 @@ class RentalController extends Controller
         $my_memberID = Member::where('PIN', '=', $request->search)->first('id')->id;
         $rentals = Rental::where('memberID', '=', $my_memberID)
             ->where('returned', '=', 1)
+            ->select('*', \DB::raw("rentals.id as rentalID"))
             ->join('books', 'rentals.bookID', '=', 'books.id')
             ->join('members', 'rentals.memberID', '=', 'members.id')
             ->paginate(20);
