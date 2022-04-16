@@ -60,7 +60,7 @@ class RentalController extends Controller
     {
         $role = Member::where('PIN', '=', $request->PIN)->first('role')->role;
         $my_memberID = Member::where('PIN', '=', $request->PIN)->first('id')->id;
-        $unsettled_rentals = Rental::where('memberID', '=', $my_memberID)->count();
+        $unsettled_rentals = Rental::where('memberID', '=', $my_memberID)->where('returned', '=', 0)->count();
         
         switch($role) {
             case('US'):
