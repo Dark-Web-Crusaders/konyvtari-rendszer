@@ -21,6 +21,7 @@ return new class extends Migration
             $table->date('deadline');
             $table->date('created_at');
             $table->date('updated_at');
+            $table->boolean('returned');
             $table->foreign('memberID')->references('id')->on('members');
             $table->foreign('bookID')->references('id')->on('books');
 

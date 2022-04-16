@@ -2,6 +2,9 @@
 
 namespace Database\Factories;
 
+use app\Models\Book;
+use app\Models\Member;
+
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

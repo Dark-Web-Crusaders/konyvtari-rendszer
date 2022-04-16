@@ -12,6 +12,16 @@ class Rental extends Model
     protected $fillable = [
         'memberID',
         'bookID',
+        'returned'
     ];
 
+    public function book()
+    {
+        return $this->belongsTo(Book::class, 'bookID');
+    }
+    
+    public function member()
+    {
+        return $this->belongsTo(Member::class, 'memberID');
+    }
 }

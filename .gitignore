@@ -1,3 +1,4 @@
+.gitignore
 /node_modules
 /public/hot
 /public/storage
@@ -13,5 +14,3 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
-/routes/web.php
-.gitignore

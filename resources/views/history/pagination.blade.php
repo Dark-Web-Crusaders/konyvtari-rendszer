@@ -2,7 +2,7 @@
 
     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg m-1">
         @include('inc.messages')
-        <form id="searchForm" class="search" action="{{route('rentals')}}" method="POST">
+        <form id="searchForm" class="search" action="{{route('history')}}" method="POST" >
             @csrf
             <input name="search" type="text" class="search-box" placeholder="Filter by PIN"/>
             <span class="search-button">
@@ -24,11 +24,7 @@
                 <td>{{$rental->isbn}}</td>
                 <td>{{$rental->title}}</td>
                 <td>{{$rental->deadline}}</td>
-                <td>
-                    <a href="{{ route('rentalview', ['id' => $rental->rentalID]) }}" title="Return Book">
-                        <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" type="submit">Return Book</button>
-                    </a>
-                </td>
+
             </tr>
         @endforeach
         </table>

@@ -52,6 +52,9 @@ Route::get('/rentals/addrental', function() {
 })->middleware(['auth'])->name('addrental');
 Route::post('/rentals/addrental', [RentalController::class, 'store']);
 Route::get('/rentals/rentalview/{id}', [RentalController::class, 'rentalView'])->middleware(['auth'])->name('rentalview');
-Route::delete('/rentals/{rental}', [RentalController::class, 'destroy']); 
+Route::put('/rentals/{rental}', [RentalController::class, 'update']);
+
+Route::get('/history', [RentalController::class, 'fulfilledRentals'])->middleware(['auth'])->name('history');
+Route::post('/history', [RentalController::class, 'historySearch']);
 
 require __DIR__.'/auth.php';

@@ -13,8 +13,23 @@ class RentalController extends Controller
 {
     public function Rentals()
     {
-        $rentals = DB::table("rentals")->paginate(20);
+        $rentals = DB::table("rentals")
+            ->where('returned', '=', '0')
+            ->select('*', \DB::raw("rentals.id as rentalID"))
+            ->join('books', 'rentals.bookID', '=', 'books.id')
+            ->join('members', 'rentals.memberID', '=', 'members.id')
+            ->paginate(20);
         return view("rentals", compact('rentals'));
+    }
+
+    public function fulfilledRentals()
+    {
+        $rentals = DB::table("rentals")
+            ->where('returned', '=', '1')
+            ->join('books', 'rentals.bookID', '=', 'books.id')
+            ->join('members', 'rentals.memberID', '=', 'members.id')
+            ->paginate(20);
+        return view("history", compact('rentals'));
     }
 
     /* Returns deadline as datetime. */
@@ -36,7 +51,6 @@ class RentalController extends Controller
                 return now()->addDays(14);
 
             default:
-                //We could do like an error thing
                 return 0;
         }
     }
@@ -85,15 +99,15 @@ class RentalController extends Controller
         ]);
 
         if ($this->isAboveLimit($request)) {
-            return redirect('rentals/addrental')
-                ->withErrors()
-                ->withInput();
+            return back()
+                ->withInput()
+                ->with('status', 'Member is not allowed to have any more outstading book rentals');
         }
 
         if (!$this->isBookAvailable($request)) {
-            return redirect('rentals/addrental')
-                ->withErrors()
-                ->withInput();
+            return back()
+                ->withInput()
+                ->with('status', 'The book has no copies available to be borrowed');
         }
 
         DB::table('rentals')->insert([
@@ -101,7 +115,8 @@ class RentalController extends Controller
             'bookID' => Book::where('isbn', '=', $request->isbn)->first('id')->id,
             'deadline' => $this->deadline($request),
             'created_at' => now(),
-            'updated_at' => now()
+            'updated_at' => now(),
+            'returned' => 0
         ]);
 
         return redirect('rentals');
@@ -110,14 +125,42 @@ class RentalController extends Controller
     public function search(Request $request)
     {
         $my_memberID = Member::where('PIN', '=', $request->search)->first('id')->id;
-        $rentals = Rental::where('memberID', 'like', '%' . $my_memberID . '%')
+        $rentals = Rental::where('memberID', '=', $my_memberID)
+            ->where('returned', '=', 0)
+            ->join('books', 'rentals.bookID', '=', 'books.id')
+            ->join('members', 'rentals.memberID', '=', 'members.id')
             ->paginate(20);
         return view("rentals", compact('rentals'));
     }
 
+    public function historySearch(Request $request)
+    {
+        $my_memberID = Member::where('PIN', '=', $request->search)->first('id')->id;
+        $rentals = Rental::where('memberID', '=', $my_memberID)
+            ->where('returned', '=', 1)
+            ->join('books', 'rentals.bookID', '=', 'books.id')
+            ->join('members', 'rentals.memberID', '=', 'members.id')
+            ->paginate(20);
+        return view("history", compact('rentals'));
+    }
+
     public function rentalView($id)
     {
-        $rental = DB::table("rentals")->where("id", $id)->first();
+        $rental = DB::table("rentals")
+            ->where('rentals.id', '=', $id)
+            ->select('*', \DB::raw("rentals.id as rentalID"))
+            ->join('books', 'rentals.bookID', '=', 'books.id')
+            ->join('members', 'rentals.memberID', '=', 'members.id')
+            ->first();
         return view('rentals.rentalview', compact('rental'));
+    }
+
+    public function update(Rental $rental)
+    {
+        $rental->update([
+            'returned' => 1
+        ]);
+
+        return redirect('rentals');
     }
 }
