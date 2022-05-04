@@ -68,13 +68,13 @@ class LibraryController extends Controller
         return redirect('library');
     }
 
-    public function editView($id)
+    public function editBook($id)
     {
         $book = DB::table("books")->where("id", $id)->first();
         return view('books.editView' , compact('book'));
     }
 
-    public function editBook(Request $request, $id)
+    public function updateBook(Request $request, $id)
     {
         $this->validate($request, [
             'title' => ['required','string', 'min:10', 'max:255'],
@@ -100,6 +100,6 @@ class LibraryController extends Controller
                'quantity' => $request->quantity,
                'image' => $path
             ]);
-        return redirect()->route('books.bookview', ['id' => $id]);
+        return redirect()->route('bookview', ['id' => $id]);
     }
 }

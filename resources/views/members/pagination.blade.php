@@ -1,14 +1,22 @@
 <div class="my-2">
 
-    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg m-1">
+    <div class="bg-white overflow-hidden shadow-sm sm:rounded-t-lg m-1">
         @include('inc.messages')
-        <form id="searchForm" class="search" action="{{route('members')}}" method="POST">
-            @csrf
-            <input name="search" type="text" class="search-box"/>
-            <span class="search-button">
-                <span class="search-icon"></span>
-            </span>
-        </form>
+        <div class="grid grid-cols-2 m-4">
+            <form id="searchForm" class="search" action="{{ route('searchMember') }}" method="POST">
+                @csrf
+                <input name="search" type="text" class="search-box" />
+                <span class="search-button">
+                    <span class="search-icon"></span>
+                </span>
+            </form>
+            <div class="block m-auto">
+                <a class="tooltip bg-white" href="{{ route('addmember') }}" title="Könyv hozzáadása">
+                    <x-pen class="fill-current text-gray-600" />
+                </a>
+            </div>
+        </div>
+
         <table id="table" class="w-full text-center">
             <tr>
                 <th>Name</th>
@@ -17,36 +25,30 @@
                 <th>Email</th>
                 <th>Pin</th>
                 <th>Role</th>
+                <th></th>
             </tr>
-        @foreach ($members as $member)
-            <tr>
-                <td>
-                    <div contenteditable="false" id="nameDiv{{$loop->iteration}}" class="border-0 m-0 p-0 text-center">{{$member->name}}</div>
-                </td>
-                <td>{{$member->birth_date}}</td>
-                <td>{{$member->address}}</td>
-                <td>{{$member->email}}</td>
-                <td>{{$member->PIN}}</td>
-                <td>{{$member->role}}</td>
-            </tr>
-        @endforeach
+            @foreach ($members as $member)
+                <tr>
+                    <td>{{ $member->name }}</td>
+                    <td>{{ $member->birth_date }}</td>
+                    <td>{{ $member->address }}</td>
+                    <td>{{ $member->email }}</td>
+                    <td>{{ $member->PIN }}</td>
+                    <td>{{ $member->role }}</td>
+                    <td>
+                        <a href=" {{route('editMember', ['id' => $member->id]) }} ">
+                            <button><i class="fa fa-bars w-5 h-5"></i></button>
+                        </a>
+                    </td>
+                </tr>
+            @endforeach
         </table>
     </div>
     {!! $members->links() !!}
 </div>
 
 <script>
-    var table = document.getElementById("table");
-    checkboxes = document.querySelectorAll("input[name=checkbox]");
-    checkboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', function() {
-            if (this.checked) {
-                document.getElementById(`nameDiv${this.id}`).contentEditable = true;
-            } else {
-                document.getElementById(`nameDiv${this.id}`).contentEditable = false;
-            }
-        });
-    });
+    // search button trigger
     $('.search-button').click(function() {
         $(this).parent().toggleClass('open');
         if (!$(this).parent().hasClass('open')) {

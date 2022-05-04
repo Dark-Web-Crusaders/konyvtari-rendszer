@@ -50,4 +50,32 @@ class MemberController extends Controller
             ->paginate(20);
         return view("members", compact('members'));
     }
+
+    public function editMember($id)
+    {
+        $member = Member::where('id', $id)->first();
+        return view('members.editMember', ['id' => $id, 'member' => $member]);
+    }
+
+    public function updateMember(Request $request)
+    {
+        $this->validate($request, [
+            'name' => ['required'],
+            'birthdate' => ['required'],
+            'address' => ['required'],
+            'email' => ['required'],
+            'pin' => ['required'],
+            'submit' => ['']
+        ]);
+        $member = Member::where('id', $request->id)->first();
+        $member->update([
+            'name' => $request->name,
+            'birth_date' => $request->birthdate,
+            'address' => $request->address,
+            'email' => $request->email,
+            'pin' => $request->pin,
+            'role' => $request->role
+        ]);
+        return redirect("members")->withSuccess('Member updated successfully');
+    }
 }

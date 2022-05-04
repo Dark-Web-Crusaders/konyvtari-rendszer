@@ -26,15 +26,18 @@ Route::post('/library', [LibraryController::class, 'search']);
 Route::get('/library/bookview/{id}', [LibraryController::class, 'bookView'])->middleware(['auth'])->name('bookview');
 
 Route::get('/members', [MemberController::class, 'members'])->middleware(['auth'])->name('members');
-Route::post('/members', [MemberController::class, 'search']);
+
+Route::post('/members/search', [MemberController::class, 'search'])->name('searchMember');
+Route::get('/members/editMember/{id}', [MemberController::class, 'editMember'])->name('editMember');
+Route::post('/members/editMember/{id}', [MemberController::class, 'updateMember'])->name('updateMember');
 
 Route::get('/addBook', function () {
     return view('books.addBook');
 })->middleware(['auth'])->name('addBook');
 Route::post('/addBook', [LibraryController::class, 'addBook'])->middleware(['auth']);
 
-Route::get('/library/editview/{id}', [LibraryController::class, 'editView'])->middleware(['auth'])->name('editView');
-Route::post('/library/editview/{id}', [LibraryController::class, 'editBook'])->middleware(['auth'])->name('editBook');
+Route::get('/library/editBook/{id}', [LibraryController::class, 'editBook'])->middleware(['auth'])->name('editView');
+Route::post('/library/editBook/{id}', [LibraryController::class, 'updateBook'])->middleware(['auth'])->name('editBook');
 
 Route::get('/dashboard', [DashboardController::class, 'Books'])->middleware(['auth'])->name('dashboard');
 
