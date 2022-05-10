@@ -18,8 +18,10 @@ return new class extends Migration
             // ki mit/miket mikor határidő
             $table->bigInteger('memberID')->unsigned();
             $table->bigInteger('bookID')->unsigned();
-            $table->date('created_at');
             $table->date('deadline');
+            $table->date('created_at');
+            $table->date('updated_at');
+            $table->boolean('returned');
             $table->foreign('memberID')->references('id')->on('members');
             $table->foreign('bookID')->references('id')->on('books');
 

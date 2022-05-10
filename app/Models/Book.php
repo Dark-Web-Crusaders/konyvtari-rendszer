@@ -10,4 +10,9 @@ class Book extends Model
     use HasFactory;
 
     public $timestamps = false;
+
+    public function rentals()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

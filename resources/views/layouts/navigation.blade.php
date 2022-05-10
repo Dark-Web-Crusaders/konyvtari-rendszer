@@ -21,6 +21,15 @@
                     <x-nav-link :href="route('members')" :active="request()->routeIs('members')">
                         {{ __('Members') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('rentals')" :active="request()->routeIs('rentals')">
+                        {{ __('Rentals') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('history')" :active="request()->routeIs('history')">
+                        {{ __('History') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('addrental')" :active="request()->routeIs('addrental')">
+                        {{ __('Record New Rental') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -77,6 +86,12 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('members')" :active="request()->routeIs('members')">
                 {{ __('Members') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('rentals')" :active="request()->routeIs('rentals')">
+                {{ __('Rentals') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('addrental')" :active="request()->routeIs('addrental')">
+                {{ __('Record New Rental') }}
             </x-responsive-nav-link>
         </div>
 
