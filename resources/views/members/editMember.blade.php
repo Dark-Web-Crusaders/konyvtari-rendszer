@@ -29,6 +29,9 @@
                 </div>
                 {{ Form::submit('Update changes!', ['class' => 'hover:bg-gray-200 p-2 m-1 sm:rounded-lg']) }}
                 {{ Form::close() }}
+                {{ Form::open(array('route' => ['deleteMember', $member->id], 'enctype' => 'multipart/form-data')) }}
+                {{ Form::submit('Delete member!', ['class' => 'hover:bg-gray-200 p-2 m-1 sm:rounded-lg']) }}
+                {{ Form::close() }}
             </div>
         </div>
     </div>

@@ -7,14 +7,16 @@ use Illuminate\Support\Facades\DB;
 use File;
 
 use App\Models\Book;
+use App\Models\Rental;
 
 use AppHttpRequests;
 
-class LibraryController extends Controller
+class BookController extends Controller
 {
     public function Books()
     {
-        $books = DB::table("books")->paginate(12);
+        $books = DB::table("books")->where('deleted', '0')->paginate(12);
+
         return view("library", compact('books'));
     }
 
@@ -101,5 +103,36 @@ class LibraryController extends Controller
                'image' => $path
             ]);
         return redirect()->route('bookview', ['id' => $id]);
+    }
+
+    public function deleteAllBooks(Request $request)
+    {
+        $rental = Rental::where('bookID', $request->id)->get();
+        $rented = count($rental);
+        if($rented=0)
+        {
+            Book::where('id', $request->id)->update([
+            'deleted'=>1
+        ]);
+            return redirect('library')->withSuccess('Books deleted successfully');
+        } else {
+            return redirect('library') ->withErrors('Couldn\'t delete book because it\'s rented');
+        }
+    }
+    public function deleteBook(Request $request)
+    {
+        //dd($request);
+        $rental = Rental::where('bookID', $request->id)->get();
+        $rented = count($rental);
+        $book = Book::where('id', $request->id)->first();
+        //dd($book);
+        if($book->quantity - $rented > 0){
+            $book->update([
+                'quantity' => $book->quantity -1
+            ]);
+            return redirect('library')->withSuccess('Book deleted successfully');
+        } else {
+            return redirect('library')->withErrors('There are no more books avaible');
+        }
     }
 }

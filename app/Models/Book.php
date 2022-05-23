@@ -9,6 +9,10 @@ class Book extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'quantity'
+    ];
+
     public $timestamps = false;
 
     public function rentals()

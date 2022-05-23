@@ -15,7 +15,8 @@ class Member extends Model
         'address',
         'email',
         'pin',
-        'role'
+        'role',
+        'deleted'
     ];
 
     // public function __construct($name, $birth_date, $address, $email, $pin)

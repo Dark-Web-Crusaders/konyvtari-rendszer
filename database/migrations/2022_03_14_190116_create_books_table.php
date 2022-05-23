@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('isbn', 10)->unique();
             $table->string('isbn13', 13)->unique();
             $table->string('image');
+            $table->boolean('deleted')->default(0);
         });
     }
 

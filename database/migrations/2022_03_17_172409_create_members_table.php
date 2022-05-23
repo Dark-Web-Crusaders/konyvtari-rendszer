@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('PIN', 8);
             $table->string('role');
             $table->timestamps();
+            $table->boolean('deleted')->default(0);
         });
     }
 

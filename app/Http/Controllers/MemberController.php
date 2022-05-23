@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Exception;
 
 use App\Models\Member;
+use App\Models\Rental;
 
 class MemberController extends Controller
 {
     public function Members()
     {
-        $members = DB::table("members")->paginate(20);
+        $members = DB::table("members")->where('deleted', '0')->paginate(20);
         return view("members", compact('members'));
     }
 
@@ -77,5 +79,23 @@ class MemberController extends Controller
             'role' => $request->role
         ]);
         return redirect("members")->withSuccess('Member updated successfully');
+    }
+
+    public function deleteMember(Request $request)
+    {
+        //dd ($request);
+        $rental = Rental::where('memberID', $request->id)->where('returned', 0)->get();
+        $rented = count($rental);
+        //dd ($rental);
+        if($rented>0)
+        {
+            return redirect('members') ->withErrors('Member has ongoing rental');
+            
+        } else {
+            Member::where('id', $request->id)->update([
+            'deleted'=>1
+        ]);
+            return redirect('members')->withSuccess('Member deleted successfully');
+        }
     }
 }
