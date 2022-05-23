@@ -18,19 +18,19 @@
                         <img class="" src="{{ URL($book->image) }}">
                     </div>
                     <div class="flex justify-center">
-                        <span>Cím: {{ $book->title }} </span>
+                        <span>Title: {{ $book->title }} </span>
                     </div>
                     <div class="flex justify-center">
-                        <span>Író: {{ $book->author }} </span>
+                        <span>Author: {{ $book->author }} </span>
                     </div>
                     <div class="flex justify-center">
-                        <span>Kiadó: {{ $book->publisher }} </span>
+                        <span>Publisher: {{ $book->publisher }} </span>
                     </div>
                     <div class="flex justify-center">
-                        <span>Kiadás éve: {{ $book->published }} </span>
+                        <span>Year of publication: {{ $book->published }} </span>
                     </div>
                     <div class="flex justify-center">
-                        <span>Mennyiség: {{ $book->quantity }} </span>
+                        <span>Quantity: {{ $book->quantity }} </span>
                     </div>
                     <div class="flex justify-center">
                         <span>ISBN: {{ $book->isbn }} </span>

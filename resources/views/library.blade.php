@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     Books
-                    <a class="tooltip bg-white float-right" href="{{ route('addBook') }}" title="Könyv hozzáadása">
+                    <a class="tooltip bg-white float-right" href="{{ route('addBook') }}" title="Add book">
                         <x-pen class="fill-current float-right text-gray-600" />
                     </a>
                 </div>

@@ -116,7 +116,7 @@ class BookController extends Controller
         ]);
             return redirect('library')->withSuccess('Books deleted successfully');
         } else {
-            return redirect('library') ->withErrors('Couldn\'t delete book because it\'s rented');
+            return redirect('library') ->withErrors('Couldn\'t delete all books because some copies of it are rented');
         }
     }
     public function deleteBook(Request $request)

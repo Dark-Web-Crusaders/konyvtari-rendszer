@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Exception;
 
 use App\Models\Book;
 use App\Models\Member;
@@ -124,18 +125,26 @@ class RentalController extends Controller
 
     public function search(Request $request)
     {
-        $my_memberID = Member::where('PIN', '=', $request->search)->first('id')->id;
-        $rentals = Rental::where('memberID', '=', $my_memberID)
-            ->where('returned', '=', 0)
-            ->select('*', \DB::raw("rentals.id as rentalID"))
-            ->join('books', 'rentals.bookID', '=', 'books.id')
-            ->join('members', 'rentals.memberID', '=', 'members.id')
-            ->paginate(20);
+        try
+        {
+            $my_memberID = Member::where('PIN', '=', $request->search)->first('id')->id;
+            $rentals = Rental::where('memberID', '=', $my_memberID)
+                ->where('returned', '=', 0)
+                ->select('*', \DB::raw("rentals.id as rentalID"))
+                ->join('books', 'rentals.bookID', '=', 'books.id')
+                ->join('members', 'rentals.memberID', '=', 'members.id')
+                ->paginate(20);
+        } catch(Exception $e) {
+            return redirect()->back()->withErrors('Searched pin could not be found.');
+        }
+        
         return view("rentals", compact('rentals'));
     }
 
     public function historySearch(Request $request)
     {
+        try
+        {
         $my_memberID = Member::where('PIN', '=', $request->search)->first('id')->id;
         $rentals = Rental::where('memberID', '=', $my_memberID)
             ->where('returned', '=', 1)
@@ -143,6 +152,10 @@ class RentalController extends Controller
             ->join('books', 'rentals.bookID', '=', 'books.id')
             ->join('members', 'rentals.memberID', '=', 'members.id')
             ->paginate(20);
+        } catch(Exception $e) {
+            return redirect()->back()->withErrors('Searched pin could not be found.');
+        }
+        
         return view("history", compact('rentals'));
     }
 

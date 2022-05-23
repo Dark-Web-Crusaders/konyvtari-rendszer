@@ -11,7 +11,7 @@
                 </span>
             </form>
             <div class="block m-auto">
-                <a class="tooltip bg-white" href="{{ route('addmember') }}" title="Könyv hozzáadása">
+                <a class="tooltip bg-white" href="{{ route('addmember') }}" title="Add book">
                     <x-pen class="fill-current text-gray-600" />
                 </a>
             </div>
