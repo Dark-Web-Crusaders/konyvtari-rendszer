@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\MemberController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RentalController;
 
 /*
@@ -42,8 +41,6 @@ Route::get('/library/editBook/{id}', [BookController::class, 'editBook'])->middl
 Route::post('/library/editBook/{id}', [BookController::class, 'updateBook'])->middleware(['auth'])->name('editBook');
 Route::post('/library/editBook/{id}/deleteall', [BookController::class, 'deleteAllBooks'])->middleware(['auth'])->name('deleteAllBooks');
 Route::post('/library/editBook/{id}/delete', [BookController::class, 'deleteBook'])->middleware(['auth'])->name('deleteBook');
-
-Route::get('/dashboard', [DashboardController::class, 'Books'])->middleware(['auth'])->name('dashboard');
 
 Route::get('/members/addmember', function() {
     return view('members.addMember');
