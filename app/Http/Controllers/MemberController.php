@@ -23,9 +23,9 @@ class MemberController extends Controller
         $this->validate($request, [
             'name' => ['required', 'min:4'],
             'birthdate' => ['required', 'after:1900-01-01'],
-            'address' => ['required', 'regex:^\d{4,5}+[. ,a-zA-Z]*+\d[ .]$'],
+            'address' => ['required', 'regex:/^[a-zA-Z0-9]/'],
             'email' => ['required', 'email'],
-            'pin' => ['required', 'regex:^[a-zA-Z0-9_.-]*$'],
+            'pin' => ['required', 'unique:members', 'regex:/^[a-zA-Z0-9]/'],
             'role' => ['required']
         ]);
 
@@ -40,7 +40,7 @@ class MemberController extends Controller
             'updated_at' => now()
         ]);
 
-        return view('members');
+        return Redirect("members");
     }
 
     public function search(Request $request)
