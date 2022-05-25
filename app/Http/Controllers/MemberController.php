@@ -23,7 +23,7 @@ class MemberController extends Controller
         $this->validate($request, [
             'name' => ['required', 'min:4'],
             'birthdate' => ['required', 'after:1900-01-01'],
-            'address' => ['required', 'regex:/^[a-zA-Z0-9]/'],
+            'address' => ['required'],
             'email' => ['required', 'email'],
             'pin' => ['required', 'unique:members', 'regex:/^[a-zA-Z0-9]/'],
             'role' => ['required']
